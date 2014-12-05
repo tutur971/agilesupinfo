@@ -30,7 +30,49 @@ public class Message implements Serializable {
     
     @Override
     public String toString() {
-        return "com.supinfo.SupAgile.entity.Message[ id=" + id + " ]";
+        return "com.supinfo.SupAgile.entity.Message[ id=" + getId() + " ]";
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the user_id
+     */
+    public Utilisateurs getUser_id() {
+        return user_id;
+    }
+
+    /**
+     * @param user_id the user_id to set
+     */
+    public void setUser_id(Utilisateurs user_id) {
+        this.user_id = user_id;
     }
     
 }

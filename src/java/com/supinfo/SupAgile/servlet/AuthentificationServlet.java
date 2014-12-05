@@ -41,11 +41,16 @@ public class AuthentificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(" DDDDDDOOOOOOOGGGGGGGEEEEEETTTTTTT");
+                if(request.getSession().getAttribute("sessionUtilistaeur") != null) {
+                    redirection("",request,response,"/authUser/Profil");
+                }else{
+                     redirection("",request,response,"/index.jsp");
+                }
     }
     
     private void redirection(String messageConnexion, HttpServletRequest request, HttpServletResponse response,String root ){
             
+
             request.setAttribute("messageConnexion", messageConnexion);
             RequestDispatcher rd = request.getRequestDispatcher(root);
 
@@ -56,6 +61,7 @@ public class AuthentificationServlet extends HttpServlet {
             } catch (IOException ex) {
                 Logger.getLogger(AuthentificationServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+        
 
     }
 
@@ -63,6 +69,7 @@ public class AuthentificationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          
+
         HttpSession session = request.getSession();
         String password = request.getParameter("password");
         String email = request.getParameter("email");
@@ -76,11 +83,13 @@ public class AuthentificationServlet extends HttpServlet {
         
         if(users != null ){
             
+            session.setAttribute("sessionUserObject",users);
             session.setAttribute("sessionUtilistaeur", email);
             System.out.println("Login USERSSSSSSSSSSSSSSSSSSSSSSSSSS");
             messageConnexion = "Connexion Sucess";
+            
             redirection(messageConnexion,request,response,"/authUser/Profil");
-        
+            
         } else {
             System.out.println("REDIRECTION  redirection");
             messageConnexion = "Une erreur est survenu lors de la connexion";

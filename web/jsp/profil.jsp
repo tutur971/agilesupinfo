@@ -35,26 +35,32 @@
   </head>
   <body>
       <jsp:include page="header.jsp"/>
-    <div>
 
-    </div>
     <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      <div id="p_container" class="container">
-        <div id ="profile" class="bloc-profile">
-        <img src="webroot/img/profile.jpg">
-        <p>Nom</p> 
-        <p>Prénom</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">D&eacute;tails Profil &raquo;</a></p>
-        </div>
-          <div id="statut" class="statut">
-            <div class="">
-              <input type="text" placeholder="statut" class="">
-            </div>
-            <button type="submit" class="btn btn-success">Poster</button>
-          </div>
-      </div>
-    </div>
+              <div class="jumbotron">
+                      <div class="row">
+                          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4 col-md-offset-2 col-lg-offset-1 ">
+                                <div id="p_container" class="container">
+                                  <div id ="profile" class="bloc-profile">
+                                  <img src="webroot/img/profile.jpg">
+                                  <p>Nom</p> 
+                                  <p>Prénom</p>
+                                  <p><a class="btn btn-primary btn-lg" href="#" role="button">D&eacute;tails Profil &raquo;</a></p>
+                                  </div>
+                                </div>
+                           </div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 ">
+                                     <div id="statut" class="statut">
+                                         <form action="authUser/message" method="post">
+                                           <div class="">
+                                             <input type="textearea" cols="4" rows="10" name="message" placeholder="statut" class="">
+                                           </div>
+                                           <button type="submit" class="btn btn-success">Poster</button>
+                                         </form>
+                                   </div>
+                            </div>
+                       </div>  
+             </div>
 
     <div class="container">
       <!-- Example row of columns -->
