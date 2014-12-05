@@ -5,47 +5,28 @@
  */
 package com.supinfo.SupAgile.servlet;
 
+import com.supinfo.SupAgile.entity.Utilisateurs;
+import com.supinfo.SupAgile.jpa.JpaDaoUtilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Gaetan
  */
-@WebServlet(name = "AuthentificationServlet", urlPatterns = {"/AuthentificationServlet"})
+@WebServlet(name = "AuthentificationServlet", urlPatterns = {"/AuthentificationS"})
 public class AuthentificationServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AuthentificationServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AuthentificationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
+    @EJB
+    JpaDaoUtilisateur jpaUtil;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -58,31 +39,50 @@ public class AuthentificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String password = request.getParameter("password");
+        String username = request.getParameter("username");
+        
+        String messageConnexion="";
+        
+        // requete SQL qui vérifie si  l'utilisateur existe dans la table contact.
+        //quel type c'est UTILISATEUR ou ADMIN
+       // User user =null
+        Utilisateurs users = jpaUtil.checkUsers(username,password);
+        
+        
+        if(users != null ){
+            
+	session.setAttribute("sessionUtilistaeur", username);
+	System.out.println("Login USERSSSSSSSSSSSSSSSSSSSSSSSSSS");
+        messageConnexion = "Connexion Sucess";
+
+        }else{
+          messageConnexion = "Une erreur est survenu lors de la connexion";
+        }
+        
+            request.setAttribute("messageConnexion", messageConnexion);
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		
+            try {
+		rd.forward(request, response);
+
+		} catch (ServletException e) {
+			e.printStackTrace();
+			System.out.println("Probleme forward dans doPost de LoginServlet");
+		}
+               
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

@@ -15,5 +15,6 @@ public interface DaoUtilisateur {
     
     public void AddUtilisateur(Utilisateurs utilisateur);
     public Utilisateurs GetUtilisateurById(int id );
-    
+    public Utilisateurs checkUsers(String username,String password);
+
 }
