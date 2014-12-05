@@ -6,9 +6,8 @@
 package com.supinfo.SupAgile.jpa;
 
 import com.supinfo.SupAgile.dao.DaoUtilisateur;
-import com.supinfo.SupAgile.entity.Message;
 import com.supinfo.SupAgile.entity.Utilisateurs;
-import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,6 +16,7 @@ import javax.persistence.TypedQuery;
  *
  * @author Frede
  */
+@Stateless
 public class JpaDaoUtilisateur implements DaoUtilisateur{
 
     @PersistenceContext
@@ -36,9 +36,12 @@ public class JpaDaoUtilisateur implements DaoUtilisateur{
     @Override
     public Utilisateurs checkUsers(String username, String password) {
         
-       TypedQuery<Utilisateurs> typedQuery = em.createQuery("SELECT u from Utilisateurs u WHERE u.password=:password AND u.username=:username ",Utilisateurs.class);
+        System.out.println("JJJJJJJJJJJEEEEEEEEEEEEE PASSSSSSSSSSSSSSSSSSSSSS "+username);
+        System.out.println("JJJJJJJJJJJEEEEEEEEEEEEE PASSSSSSSSSSSSSSSSSSSSSSWORD "+password);
+
+       TypedQuery<Utilisateurs> typedQuery = em.createQuery("SELECT u from Utilisateurs u WHERE u.password=:password AND u.email=:email ",Utilisateurs.class);
        typedQuery.setParameter("password",password);
-       typedQuery.setParameter("username",username);
+       typedQuery.setParameter("email",username);
 
         Utilisateurs util = null;
         try{
@@ -48,5 +51,4 @@ public class JpaDaoUtilisateur implements DaoUtilisateur{
         }       
         return util;   
     }
-    
 }

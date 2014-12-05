@@ -13,7 +13,6 @@
     </head>
     <body>
      
-     
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -28,13 +27,12 @@
         <div id="navbar" class="navbar-collapse collapse">
         <%  if(session.getAttribute("sessionUtilistaeur") != null ) { %> 
           <form action="logout" method="post">
-            <div class="form-group">
+            <div class="form-group" style=" margin-top:10px; ">
               <input type="text" placeholder="Search" class="form-control2">
+              <button type="submit" class="btn btn-success">Search</button>
+              <button style="float: right;"type="submit" class="btn btn-success">Log Out</button>
             </div>
-            <button type="submit" class="btn btn-success">Log Out</button>
          </form>
-        <a href="" > Logout </a>
-            
         <% }else { %>
           <form class="navbar-form navbar-right" role="form" action="authentification" method="post">
              <div class="form-group">
@@ -42,12 +40,13 @@
             </div>
             <button type="submit" class="btn btn-success">Search</button>
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" name="email" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" name="password" placeholder="Password" class="form-control">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
+            <p style="color: red;">${messageConnexion}</p>
           </form>
          <% } %>
         </div><!--/.navbar-collapse -->
